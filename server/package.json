@@ -22,6 +22,7 @@
     "mongoose": "^8.13.1"
   },
   "devDependencies": {
+    "mongosh": "^2.4.2",
     "typescript": "^5.8.2"
   }
 }
