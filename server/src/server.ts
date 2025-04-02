@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 
 // Load environment variables
 const PORT = process.env.PORT || 3001;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/billbuddies';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/googlebooks';
 const JWT_SECRET = process.env.JWT_SECRET || 'mysecretsshhhhh';
 
 // === 🔹 Utility Function: Verify Token ===
