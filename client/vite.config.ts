@@ -7,13 +7,7 @@ export default defineConfig({
   server: {
     port: 3001, // Frontend runs on 3001
     open: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
+    
 //    proxy: {
 //      '/graphql': {
 //        target: 'http://localhost:3000', // Backend runs on 3000
