@@ -1,4 +1,22 @@
 {
+  "name": "billbuddies",
+  "version": "1.0.0",
+  "description": "Shared Expense Tracker for Roommates or Trips",
+  "homepage": "https://github.com/abraham757/BillBuddies#readme",
+  "bugs": {
+    "url": "https://github.com/abraham757/BillBuddies/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abraham757/BillBuddies.git"
+  },
+  "license": "ISC",
+  "author": "Team-02",
+  "type": "module",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
   "devDependencies": {
     "typescript": "^5.8.2"
   }
