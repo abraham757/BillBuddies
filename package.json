@@ -23,12 +23,17 @@
     "tsconfig-paths": "^4.2.0"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
-    "apollo-server-express": "^3.13.0",
+    "@apollo/client": "^3.13.1",
     "billbuddies-app": "file:",
-    "dotenv": "^16.4.7",
+    "bootstrap": "^5.2.3",
+    "client": "file:",
     "graphql": "^16.10.0",
-    "typescript": "^5.8.2",
-    "vitest": "^2.0.3"
+    "jwt-decode": "^4.0.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.4",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.2",
+    "vite": "^5.4.14",
+    "vitest": "^1.6.0"
   }
 }
