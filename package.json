@@ -23,6 +23,7 @@
     "render-build": "npm install && npm run build"
   },
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "typescript": "^5.8.2"
   }
 }
