@@ -16,11 +16,13 @@
   "main": "server/server.js",
   "scripts": {
     "test": "echo \\\"Error: no test specified\\\" && exit 1",
-    "start": "node server/server.js",
+     "_comment": "start node server/server.js",
     "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm i && cd ../client && npm i",
-    "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
-    "render-build": "npm install && npm run build"
+    "render-build": "cd server && tsc && cd ../client && vite build",
+    "start": "node server/dist/server.js",
+    "_comment2":"build: concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
+    "_comment3": "render-build npm install && npm run build"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
