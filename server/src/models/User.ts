@@ -9,6 +9,7 @@ interface UserDocument extends Document {
   username: string;
   email: string;
   password: string;
+  correctPassword(password: string): Promise<boolean>;
   groups: Schema.Types.ObjectId[];  // User's groups (array of Group references)
   expenses: Schema.Types.ObjectId[];  // User's expenses (array of Expense references)
 }
@@ -37,6 +38,10 @@ const userSchema = new Schema<UserDocument>(
   { timestamps: true },
 );
 
+// Method to compare passwords
+userSchema.methods.correctPassword = async function(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.password); // Compare hashed passwords
+  };
 // You can add pre-save hook for password hashing, if needed
 userSchema.pre('save', async function(next) {
   if (this.isModified('password')) {
