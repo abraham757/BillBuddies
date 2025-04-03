@@ -47,12 +47,12 @@ const SavedBooks = () => {
 
   return (
     <>
-      <div className='text-light bg-dark p-5'>
+      <div className="text-light p-5" style={{ backgroundColor: '#F4E1C6' }}>
         <Container>
           {userData.username ? (
-            <h1>Viewing {userData.username}'s saved books!</h1>
+            <h1>Viewing {userData.username}'s saved Bills!</h1>
           ) : (
-            <h1>Viewing saved books!</h1>
+            <h1>Viewing saved bills!</h1>
           )}
         </Container>
       </div>
@@ -62,7 +62,7 @@ const SavedBooks = () => {
             ? `Viewing ${userData.savedBooks.length} saved ${
                 userData.savedBooks.length === 1 ? 'book' : 'books'
               }:`
-            : 'You have no saved books!'}
+            : 'You have no saved bills yet!'}
         </h2>
         <Row>
           {userData.savedBooks?.map((book: Book) => {
