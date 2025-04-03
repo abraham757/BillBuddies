@@ -5,7 +5,8 @@ const typeDefs = `
     username: String!
     email: String!
     groups: [Group]
-    expenses: [Expense]
+    expensesPaid: [Expense]! # Expenses this user actually paid for
+    expensesCreated: [Expense]! # Expenses this user logged in the system
   }
 
   # Group type
@@ -23,14 +24,15 @@ const typeDefs = `
     description: String!
     date: String!
     groupId: Group!
-    userId: User!
+    createdBy: User! # Who added/logged the expense
+    paidBy User! # Identifies who actually covered the expense
   }
 
   # Debt type
   type Debt {
     _id: ID!
-    fromUserId: User!
-    toUserId: User!
+    fromUser: User! # Who owes money
+    toUser: User! # Who is owed money
     amount: Float!
     expenseId: Expense!
     settled: Boolean!
@@ -48,16 +50,11 @@ const typeDefs = `
   type Mutation {
     createUser(username: String!, email: String!, password: String!): User
     createGroup(groupId: String!, members: [ID!]!): Group
-    addExpense(groupId: ID!, userId: ID!, amount: Float!, description: String!, debtOwes: [DebtInput]!): Expense
-    createDebt(fromUserId: ID!, toUserId: ID!, amount: Float!, expenseId: ID!): Debt  # This mutation links a debt to an expense
+    addExpense(groupId: ID!, paidBy: ID!, amount: Float!, description: String!): Expense #Option add currency
+    splitExpense(expenseId: ID!): [Debt] 
     settleDebt(debtId: ID!): Debt
     editExpense(expenseId: ID!, amount: Float!, description: String!): Expense
     deleteExpense(expenseId: ID!): Expense
-  }
-
-  input DebtInput {
-    toUserId: ID!
-    amount: Float!
   }
 `;
 
