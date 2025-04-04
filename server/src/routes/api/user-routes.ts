@@ -2,12 +2,14 @@
 import express from 'express';
 import User from '../../models/User.js'; // Import directly from the User model file
 import { signToken } from '../../services/auth.js';
+import { console } from 'node:inspector';
 
 const router = express.Router();
 
 // create a user, sign a token, and send it back
 router.post('/', async (req: { body: any }, res: any) => {
   try {
+    console.log('Received user creation request:', req.body); // Debugging line to check incoming data
     const userData = await User.create(req.body);
 
     if (!userData) {

@@ -3,14 +3,18 @@ import { UserDocument } from "../models/User.js";
 import { BookDocument } from "../models/User.js";
 import jwt from 'jsonwebtoken';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 // Helper function for generating JWT tokens with proper typing
 const signToken = (user: { username: string; email: string; _id: string | any }): string => {
+  console.log('🔹 Generating token for user en el resolver const jwt secret:', process.env.JWT_SECRET);
   const payload = { 
     username: user.username, 
     email: user.email, 
     _id: user._id.toString ? user._id.toString() : user._id 
   };
-  return jwt.sign({ data: payload }, process.env.JWT_SECRET_KEY || 'mysecretsshhhhh', { expiresIn: '2h' });
+  return jwt.sign({ data: payload }, process.env.JWT_SECRET || '', { expiresIn: '5h' });
 };
 
 const resolvers = {
@@ -91,7 +95,7 @@ const resolvers = {
         if (!correctPassword) {
           throw new Error('Incorrect credentials');
         }
-        
+        console.log('🔹 User logged in successfully:', user.username);
         const token = signToken(user);
         return { token, user };
       } catch (error) {

@@ -6,6 +6,8 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Fix for __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -13,17 +15,17 @@ const __dirname = path.dirname(__filename);
 
 // Load environment variables
 const PORT = process.env.PORT || 3001;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/googlebooks';
-const JWT_SECRET = process.env.JWT_SECRET || 'mysecretsshhhhh';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/billbuddies';
+const JWT_SECRET = process.env.JWT_SECRET || '';
 
 // === 🔹 Utility Function: Verify Token ===
 const verifyToken = (token: string) => {
   try {
     if (!token) return null;
-    const { data } = jwt.verify(token, JWT_SECRET) as { data: any };
-    return data;
+    const decoded = jwt.verify(token, JWT_SECRET);
+    return decoded; // <- Ahora sí es correcto
   } catch (err) {
-    console.error('Token verification error:', err);
+    console.error('❌ Token verification error:', err);
     return null;
   }
 };
@@ -55,8 +57,13 @@ const startApolloServer = async () => {
         console.log('🔹 Auth header received:', token ? 'Bearer [TOKEN]' : 'No auth header');
 
         const user = verifyToken(token);
-        if (user) console.log('🔹 Authenticated user:', user._id);
-        return user ? { user, token } : {};
+
+if (user && typeof user === 'object' && '_id' in user) {
+  console.log('🔹 Authenticated user:', user._id);
+  return {  token };
+}
+
+return {};
       }
     }));
 

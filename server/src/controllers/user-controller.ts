@@ -37,6 +37,7 @@ export const getSingleUser = async (req: Request, res: Response) => {
 export const createUser = async (req: Request, res: Response) => {
   try {
     // Check if user with this email or username already exists
+    console.log('Received user creation request: user-controller', req.body); // Debugging line to check incoming data
     const existingUser = await User.findOne({
       $or: [{ email: req.body.email }, { username: req.body.username }]
     });
