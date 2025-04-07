@@ -28,3 +28,9 @@ export const removeBookId = (bookId: string) => {
 
   return true;
 };
+/* Remove Book related code and replace with:
+GROUPS: Use getSavedGroupIds, saveGroupIds, and removeGroupId to handle group data.
+EXPENSES: Use getSavedExpenses, saveExpenses, and removeExpense to manage expense data.
+
+For debts: The getSavedDebts, saveDebts, and removeDebt functions help with debt data.
+*/

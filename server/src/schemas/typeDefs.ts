@@ -48,7 +48,7 @@ const typeDefs = `
 
   # Mutations
   type Mutation {
-    createUser(username: String!, email: String!, password: String!): User
+    addUser(username: String!, email: String!, password: String!): User
     createGroup(groupId: String!, members: [ID!]!): Group
     addExpense(groupId: ID!, paidBy: ID!, amount: Float!, description: String!): Expense #Option add currency
     splitExpense(expenseId: ID!): [Debt] 
