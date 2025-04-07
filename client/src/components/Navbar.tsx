@@ -1,26 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
-import { GET_ME } from '../utils/queries';
-import { useQuery } from '@apollo/client';
 
-import Auth from '../utils/auth';
+
 
 const AppNavbar = () => {
-  // set modal display state
   const [showModal, setShowModal] = useState(false);
 
-  // Use Apollo's useQuery hook to fetch the user's data
-    const {  data } = useQuery(GET_ME);
+  const [user, setUser] = useState<any>(null);
 
-    // Get the user data from the query result
-    const userData = data?.me || {};
+  
+
+  useEffect(() => {
+    // Intentamos obtener los datos del usuario desde localStorage
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // Borramos el token y los datos del usuario al hacer logout
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('user');
+    setUser(null);
+  };
 
   return (
     <>
-      <Navbar style={{ backgroundColor: 'lightblue' }} variant="light" expand="lg">
+      <Navbar style={{ backgroundColor: 'lightblue' }} variant='light' expand='lg'>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
             Test BillBuddies
@@ -31,17 +41,18 @@ const AppNavbar = () => {
               <Nav.Link as={Link} to='/'>
                 Test BillBuddies nav Home
               </Nav.Link>
-              {/* if user is logged in show saved books and logout */}
-              {Auth.loggedIn() ? (
+
+              {user ? (
                 <>
                   <Nav.Link as={Link} to='/saved'>
                     See Your Bill Save
                   </Nav.Link>
-                  {userData.username ?(
-                  <Nav.Link>{userData.username}</Nav.Link>
-                ) : (<div></div>
-                )}
-                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+
+                  <Nav.Link>
+                    {user.username}
+                  </Nav.Link>
+
+                  <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
                 </>
               ) : (
                 <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
@@ -50,13 +61,13 @@ const AppNavbar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {/* set modal data up */}
+
+      {/* Modal para login y signup */}
       <Modal
         size='lg'
         show={showModal}
         onHide={() => setShowModal(false)}
         aria-labelledby='signup-modal'>
-        {/* tab container to do either signup or login component */}
         <Tab.Container defaultActiveKey='login'>
           <Modal.Header closeButton>
             <Modal.Title id='signup-modal'>

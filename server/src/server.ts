@@ -22,8 +22,8 @@ const JWT_SECRET = process.env.JWT_SECRET || '';
 const verifyToken = (token: string) => {
   try {
     if (!token) return null;
-    const decoded = jwt.verify(token, JWT_SECRET);
-    return decoded; // <- Ahora sí es correcto
+    const decoded = jwt.verify(token, JWT_SECRET) as { data: { _id: string; username: string; email: string } };
+    return decoded.data; // <- Ahora sí es correcto
   } catch (err) {
     console.error('❌ Token verification error:', err);
     return null;
@@ -60,6 +60,7 @@ const startApolloServer = async () => {
 
 if (user && typeof user === 'object' && '_id' in user) {
   console.log('🔹 Authenticated user:', user._id);
+  console.log('🔹 Authenticated user:', user.username)
   return {  token };
 }
 
@@ -96,7 +97,7 @@ return {};
     app.listen(PORT, () => {
       console.log(`🚀 API server running on port ${PORT}`);
       console.log(`📡 GraphQL available at http://localhost:${PORT}/graphql`);
-      console.log(`💻 React app available at http://localhost:${PORT}`);
+      console.log(`💻 React app available at http://localhost:3000`);
     });
 
   } catch (error) {

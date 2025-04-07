@@ -8,13 +8,13 @@ export const LOGIN_USER = gql`
         _id
         username
         email
-        savedBooks {
-          bookId
-          authors
+        savedBills {
+          billId
+          amount
           description
-          title
-          image
-          link
+          participants
+          paidBy
+          date
         }
       }
     }
@@ -29,52 +29,50 @@ export const ADD_USER = gql`
         _id
         username
         email
-        savedBooks {
-          bookId
-          authors
+        savedBills {
+          billId
+          amount
           description
-          title
-          image
-          link
+          participants
+          paidBy
+          date
         }
       }
     }
   }
 `;
 
-export const SAVE_BOOK = gql`
-  mutation saveBook($bookData: BookInput!) {
-    saveBook(bookData: $bookData) {
+export const SAVE_BILL = gql`
+  mutation saveBill($billData: BillInput!) {
+    saveBill(billData: $billData) {
       _id
       username
       email
-      savedBooks {
-        bookId
-        authors
+      savedBills {
+        billId
+        amount
         description
-        title
-        image
-        link
+        participants
+        paidBy
+        date
       }
     }
   }
 `;
 
-
-
-export const REMOVE_BOOK = gql`
-  mutation removeBook($bookId: ID!) {
-    removeBook(bookId: $bookId) {
+export const REMOVE_BILL = gql`
+  mutation removeBill($billId: ID!) {
+    removeBill(billId: $billId) {
       _id
       username
       email
-      savedBooks {
-        bookId
-        authors
+      savedBills {
+        billId
+        amount
         description
-        title
-        image
-        link
+        participants
+        paidBy
+        date
       }
     }
   }

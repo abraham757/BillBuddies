@@ -39,10 +39,14 @@ class AuthService {
     return localStorage.getItem('id_token');
   }
 
-  login(idToken: string) {
-    // Saves user token to localStorage
+  login(idToken: string, callback?: () => void) {
+    console.log('Saving token:', idToken);
     localStorage.setItem('id_token', idToken);
-    window.location.assign('/');
+    if (callback) {
+      callback(); // redirige desde el componente
+    } else {
+      window.location.assign('/');
+    }
   }
 
   logout() {

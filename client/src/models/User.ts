@@ -1,9 +1,9 @@
-import type { Book } from './Book';
+import type { Bill } from './Bill';
 
 export interface User {
   username: string | null;
   email: string | null;
   password: string | null;
-  savedBooks: Book[];
+  savedBills: Bill[];
 }
-export type { Book as default }
+export type { Bill as default }

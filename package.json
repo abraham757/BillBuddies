@@ -1,5 +1,5 @@
 {
-  "name": "googlebooks-app",
+  "name": "billbuddies-app",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
@@ -25,8 +25,9 @@
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.1",
     "apollo-server-express": "^3.13.0",
+    "billbuddies-app": "file:",
+    "billbuddiesa-app": "file:",
     "dotenv": "^16.4.7",
-    "googlebooks-app": "file:",
     "graphql": "^16.10.0",
     "vitest": "^2.0.3"
   }
