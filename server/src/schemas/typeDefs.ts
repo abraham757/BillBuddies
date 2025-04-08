@@ -2,11 +2,13 @@ const typeDefs = `
 # Define the Bill type, which represents a bill in the application
 type Bill {
   billId: ID!
-  amount: Float!
+  totalAmount: Float!
   description: String
   participants: [String]!  # List of participants involved in this bill
   paidBy: String!  # User who paid for the bill
   date: String
+  title: String
+  createdBy: String  # User who created the bill
 }
 
 # Define the User type, with information about the user and their bills
@@ -27,11 +29,13 @@ type Auth {
 # Input type to pass the data when adding a bill
 input BillInput {
   billId: String!
-  amount: Float!
+  totalAmount: Float!
   description: String
   participants: [String]!  # Participants involved in this bill
   paidBy: String!  # User who paid for the bill
   date: String
+  title: String
+  createdBy: String  # User who created the bill
 }
 
 # Root queries for getting data from the server
@@ -47,7 +51,6 @@ type Mutation {
   addUser(username: String!, email: String!, password: String!): Auth  # Register a new user
   saveBill(billData: BillInput!): User  # Save a bill to a user's saved bills
   removeBill(billId: ID!): User  # Remove a bill from the user's saved bills
-}
-`;
+}`
 
 export default typeDefs;

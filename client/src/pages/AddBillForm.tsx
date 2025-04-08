@@ -1,18 +1,25 @@
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-import { useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { SAVE_BILL } from '../utils/mutation';
 import { GET_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 
 const AddBillForm = () => {
+   // Use Apollo's useQuery hook to fetch the user's data
+   const {  data, } = useQuery(GET_ME);
+   const userData = data?.me || {};
+
   const [billData, setBillData] = useState({
     billId: '',
-    amount: 0,
+    totalAmount: 0,
     description: '',
+    title: '',
+    createdBy: '',
     participants: '',
     paidBy: '',
     date: '',
+
   });
 
   const [validated, setValidated] = useState(false);
@@ -49,11 +56,13 @@ const AddBillForm = () => {
         variables: {
           billData: {
             billId: billData.billId,
-            amount: parseFloat(String(billData.amount)),
+            totalAmount: parseFloat(String(billData.totalAmount)),
             description: billData.description,
             participants: participantsArray,
             paidBy: billData.paidBy,
             date: billData.date,
+            createdBy: billData.createdBy,
+            title: billData.title,
           },
         },
       });
@@ -61,11 +70,14 @@ const AddBillForm = () => {
       console.log('Bill saved:', data);
       setBillData({
         billId: '',
-        amount: 0,
+        totalAmount: 0,
         description: '',
         participants: '',
         paidBy: '',
         date: '',
+        createdBy:'',
+        title:''
+
       });
       setValidated(false);
     } catch (err) {
@@ -83,6 +95,16 @@ const AddBillForm = () => {
         </Alert>
 
         <Form.Group className="mb-3">
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            type="text"
+            name="title"
+            value={billData.title}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
           <Form.Label>Bill ID</Form.Label>
           <Form.Control
             type="text"
@@ -95,12 +117,12 @@ const AddBillForm = () => {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Amount</Form.Label>
+          <Form.Label>Amount Bill</Form.Label>
           <Form.Control
             type="number"
             step="0.01"
-            name="amount"
-            value={billData.amount}
+            name="totalAmount"
+            value={billData.totalAmount}
             onChange={handleInputChange}
             required
           />
@@ -145,6 +167,16 @@ const AddBillForm = () => {
             type="date"
             name="date"
             value={billData.date}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Created by</Form.Label>
+          <Form.Control
+            type="string"
+            name="createdBy"
+            value={billData.createdBy}
             onChange={handleInputChange}
           />
         </Form.Group>

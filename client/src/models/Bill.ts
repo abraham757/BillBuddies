@@ -1,8 +1,12 @@
+
+
 export interface Bill {
   billId: string;
-  amount: number;
+  totalAmount: number;
   description?: string;
   participants: string[]; 
+  createdBy: string;
+  title: string;
   paidBy: string;
   date?: string;
 }

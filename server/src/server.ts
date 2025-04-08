@@ -22,8 +22,8 @@ const JWT_SECRET = process.env.JWT_SECRET || '';
 const verifyToken = (token: string) => {
   try {
     if (!token) return null;
-    const decoded = jwt.verify(token, JWT_SECRET) as { data: { _id: string; username: string; email: string } };
-    return decoded.data; // <- Ahora sí es correcto
+    const { data } = jwt.verify(token, JWT_SECRET) as { data: any };
+    return data; // <- Ahora sí es correcto
   } catch (err) {
     console.error('❌ Token verification error:', err);
     return null;
@@ -57,14 +57,8 @@ const startApolloServer = async () => {
         console.log('🔹 Auth header received:', token ? 'Bearer [TOKEN]' : 'No auth header');
 
         const user = verifyToken(token);
-
-if (user && typeof user === 'object' && '_id' in user) {
-  console.log('🔹 Authenticated user:', user._id);
-  console.log('🔹 Authenticated user:', user.username)
-  return {  token };
-}
-
-return {};
+        if (user) console.log('🔹 Authenticated user:', user._id);
+        return user ? { user, token } : {};
       }
     }));
 

@@ -10,7 +10,6 @@ dotenv.config();
 
 // Helper function for generating JWT tokens with proper typing
 const signToken = (user: { username: string; email: string; _id: string | any }): string => {
-  console.log('🔹 Generating token for user en el resolver const jwt secret:', process.env.JWT_SECRET);
   const payload = { 
     username: user.username, 
     email: user.email, 
@@ -116,11 +115,11 @@ const resolvers = {
             { $addToSet: { savedBills: billData } },  // savedBills
             { new: true, runValidators: true }
           );
-          
+          console.log('Saving bill:', billData);
           if (!updatedUser) {
             throw new Error('Could not find user');
           }
-          
+          console.log('Updated user:', updatedUser);  //  bill
           return updatedUser;
         } catch (error) {
           console.error('Error saving bill:', error);  // bill

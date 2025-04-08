@@ -10,11 +10,13 @@ export const LOGIN_USER = gql`
         email
         savedBills {
           billId
-          amount
+          totalAmount
           description
           participants
           paidBy
           date
+          title
+          createdBy
         }
       }
     }
@@ -31,11 +33,13 @@ export const ADD_USER = gql`
         email
         savedBills {
           billId
-          amount
+          totalAmount
           description
           participants
           paidBy
           date
+          title
+          createdBy
         }
       }
     }
@@ -50,11 +54,13 @@ export const SAVE_BILL = gql`
       email
       savedBills {
         billId
-        amount
+        totalAmount
         description
         participants
         paidBy
         date
+        title
+        createdBy
       }
     }
   }
@@ -68,11 +74,13 @@ export const REMOVE_BILL = gql`
       email
       savedBills {
         billId
-        amount
+        totalAmount
         description
         participants
         paidBy
         date
+        title
+        createdBy
       }
     }
   }

@@ -17,7 +17,7 @@ export const getSingleUser = async (req: Request, res: Response) => {
       username: foundUser.username,
       email: foundUser.email,
       _id: foundUser._id,
-      savedBills: foundUser.savedBills,
+      savedBills: foundUser.savedBills
     };
 
     return res.json(safeUser);
@@ -55,7 +55,7 @@ export const createUser = async (req: Request, res: Response) => {
       username: user.username,
       email: user.email,
       _id: user._id,
-      savedBills: user.savedBills,
+      savedBills: user.savedBills
     };
 
     return res.json({ token, user: safeUser });
@@ -103,7 +103,7 @@ export const login = async (req: Request, res: Response) => {
       username: user.username,
       email: user.email,
       _id: user._id,
-      savedBills: user.savedBills,
+      savedBills: user.savedBills
     };
 
     return res.json({ token, user: safeUser });
@@ -137,7 +137,7 @@ export const saveBill = async (req: Request, res: Response) => {
       username: updatedUser.username,
       email: updatedUser.email,
       _id: updatedUser._id,
-      savedBills: updatedUser.savedBills,
+      savedBills: updatedUser.savedBills
     };
 
     return res.json(safeUser);
@@ -171,7 +171,7 @@ export const deleteBill = async (req: Request, res: Response) => {
       username: updatedUser.username,
       email: updatedUser.email,
       _id: updatedUser._id,
-      savedBills: updatedUser.savedBills,
+      savedBills: updatedUser.savedBills
     };
 
     return res.json(safeUser);

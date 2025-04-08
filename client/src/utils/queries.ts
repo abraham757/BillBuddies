@@ -8,11 +8,14 @@ export const GET_ME = gql`
       email
       savedBills {
         billId
-        amount
+        totalAmount
         description
         participants
         paidBy
         date
+        createdBy
+        title
+
       }
     }
   }

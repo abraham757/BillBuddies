@@ -1,4 +1,4 @@
-import { Schema, model, type Document, Types } from 'mongoose';
+import { Schema, model, type Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
 // Import the Bill schema and interface
@@ -8,7 +8,7 @@ export interface UserDocument extends Document {
   username: string;
   email: string;
   password: string;
-  savedBills: Types.DocumentArray<BillDocument>;
+  savedBills: BillDocument[];
   isCorrectPassword(password: string): Promise<boolean>;
   billCount: number;
 }

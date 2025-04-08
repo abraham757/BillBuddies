@@ -10,26 +10,19 @@ export interface BillDocument extends Document {
   title: string;
   totalAmount: number;
   date: Date;
-  createdBy: Types.ObjectId;
-  participants: BillParticipant[];
+  createdBy: string;
+  participants: [string];
   notes?: string;
 }
 
-const participantSchema = new Schema<BillParticipant>({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  amountOwed: {
-    type: Number,
-    required: true,
-    min: 0,
-  },
-});
+
 
 const billSchema = new Schema<BillDocument>({
   title: {
+    type: String,
+    required: true,
+  },
+  billId: {
     type: String,
     required: true,
   },
@@ -43,11 +36,11 @@ const billSchema = new Schema<BillDocument>({
     default: Date.now,
   },
   createdBy: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,// #ref: 'User',
+    
     required: true,
   },
-  participants: [participantSchema],
+  participants: [String],
   notes: {
     type: String,
   },
