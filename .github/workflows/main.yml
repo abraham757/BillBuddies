@@ -1,11 +1,11 @@
 # Name of workflow
-name: Lint and Test workflow
+name: First workflow
 
 # Trigger workflow on push to the 'main' branch
 on:
   push:
     branches:
-      - githubAction  
+      - feature/githubAction  
 
 # Jobs to carry out
 jobs:
