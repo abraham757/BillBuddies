@@ -22,8 +22,8 @@ jobs:
 
        # Define a step named "Deploy"
       - name: Deploy
-        # Only run this step if the branch is main
-        if: github.ref == 'refs/heads/main'
+        # Only run this step if the branch is main a change to feature/githubAction to test
+        if: github.ref == 'refs/heads/feature/githubAction'
         # Set an environment variable with the deployment URL from secrets
         env:
           DEPLOY_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
