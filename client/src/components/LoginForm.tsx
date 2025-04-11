@@ -4,12 +4,14 @@ import { LOGIN_USER } from '../utils/mutation';
 import { Form, Button, Alert } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { LoginData, LoginInput } from '../utils/interfaces.js';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginFormProps {
   handleModalClose: () => void;
 }
 
 const LoginForm = ({ handleModalClose }: LoginFormProps): JSX.Element => {
+  const navigate = useNavigate();
   // Set initial form state
   const [userFormData, setUserFormData] = useState<LoginInput>({ email: '', password: '' });
   
@@ -54,8 +56,12 @@ const LoginForm = ({ handleModalClose }: LoginFormProps): JSX.Element => {
         throw new Error('Something went wrong!');
       }
 
-      // Log the user in with the token
-      Auth.login(data.login.token);
+      // Save the token and user data to localStorage
+      localStorage.setItem('id_token', data.login.token);
+      localStorage.setItem('user', JSON.stringify(data.login.user));
+
+      // Navigate to home after login
+      navigate('/');
       
       // Close the modal
       handleModalClose();
@@ -78,46 +84,44 @@ const LoginForm = ({ handleModalClose }: LoginFormProps): JSX.Element => {
   };
 
   return (
-    <>
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
-        {/* Show alert if server response is bad */}
-        <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-          {errorMessage}
-        </Alert>
+    <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+      <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+        {errorMessage}
+      </Alert>
 
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='email'>Email</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Your email'
-            name='email'
-            onChange={handleInputChange}
-            value={userFormData.email}
-            required
-          />
-          <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
-        </Form.Group>
+      <Form.Group className='mb-3'>
+        <Form.Label htmlFor='email'>Email</Form.Label>
+        <Form.Control
+          type='text'
+          placeholder='Your email'
+          name='email'
+          onChange={handleInputChange}
+          value={userFormData.email}
+          required
+        />
+        <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
+      </Form.Group>
 
-        <Form.Group className='mb-3'>
-          <Form.Label htmlFor='password'>Password</Form.Label>
-          <Form.Control
-            type='password'
-            placeholder='Your password'
-            name='password'
-            onChange={handleInputChange}
-            value={userFormData.password}
-            required
-          />
-          <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
-        </Form.Group>
-        <Button
-          disabled={!(userFormData.email && userFormData.password)}
-          type='submit'
-          variant='success'>
-          Submit
-        </Button>
-      </Form>
-    </>
+      <Form.Group className='mb-3'>
+        <Form.Label htmlFor='password'>Password</Form.Label>
+        <Form.Control
+          type='password'
+          placeholder='Your password'
+          name='password'
+          onChange={handleInputChange}
+          value={userFormData.password}
+          required
+        />
+        <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
+      </Form.Group>
+
+      <Button
+        disabled={!(userFormData.email && userFormData.password)}
+        type='submit'
+        variant='success'>
+        Submit
+      </Button>
+    </Form>
   );
 };
 

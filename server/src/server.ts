@@ -6,6 +6,8 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { typeDefs, resolvers } from './schemas/index.js';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Fix for __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -13,17 +15,17 @@ const __dirname = path.dirname(__filename);
 
 // Load environment variables
 const PORT = process.env.PORT || 3001;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/googlebooks';
-const JWT_SECRET = process.env.JWT_SECRET || 'mysecretsshhhhh';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/billbuddies';
+const JWT_SECRET = process.env.JWT_SECRET || '';
 
 // === 🔹 Utility Function: Verify Token ===
 const verifyToken = (token: string) => {
   try {
     if (!token) return null;
     const { data } = jwt.verify(token, JWT_SECRET) as { data: any };
-    return data;
+    return data; // <- Ahora sí es correcto
   } catch (err) {
-    console.error('Token verification error:', err);
+    console.error('❌ Token verification error:', err);
     return null;
   }
 };
@@ -89,7 +91,7 @@ const startApolloServer = async () => {
     app.listen(PORT, () => {
       console.log(`🚀 API server running on port ${PORT}`);
       console.log(`📡 GraphQL available at http://localhost:${PORT}/graphql`);
-      console.log(`💻 React app available at http://localhost:${PORT}`);
+      console.log(`💻 React app available at http://localhost:3000`);
     });
 
   } catch (error) {

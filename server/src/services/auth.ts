@@ -33,7 +33,8 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 
 export const signToken = (username: string, email: string, _id: unknown) => {
   const payload = { username, email, _id };
+  console.log(process.env.JWT_SECRET);
   const secretKey = process.env.JWT_SECRET || '';
 
-  return jwt.sign(payload, secretKey, { expiresIn: '1h' });
+  return jwt.sign(payload, secretKey, { expiresIn: '5h' });
 };

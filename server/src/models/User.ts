@@ -1,27 +1,16 @@
 import { Schema, model, type Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 
-// import schema from Book.js
-import bookSchema from './Book.js';
-
-// We can still use the BookDocument interface for typing
-export interface BookDocument {
-  bookId: string;
-  title: string;
-  authors: string[];
-  description: string;
-  image: string;
-  link: string;
-}
+// Import the Bill schema and interface
+import billSchema, { BillDocument } from './Bill.js';
 
 export interface UserDocument extends Document {
-  
   username: string;
   email: string;
   password: string;
-  savedBooks: BookDocument[];
+  savedBills: BillDocument[];
   isCorrectPassword(password: string): Promise<boolean>;
-  bookCount: number;
+  billCount: number;
 }
 
 const userSchema = new Schema<UserDocument>(
@@ -41,35 +30,33 @@ const userSchema = new Schema<UserDocument>(
       type: String,
       required: true,
     },
-    // set savedBooks to be an array of data that adheres to the bookSchema
-    savedBooks: [bookSchema],
+    // Stores an array of bills using the embedded billSchema
+    savedBills: [billSchema],
   },
-  // set this to use virtual below
   {
     toJSON: {
-      virtuals: true,
+      virtuals: true, // Enable virtual properties to be included in JSON output
     },
   }
 );
 
-// hash user password
+// Middleware to hash the user's password before saving it to the database
 userSchema.pre('save', async function (next) {
   if (this.isNew || this.isModified('password')) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
-
   next();
 });
 
-// custom method to compare and validate password for logging in
+// Custom method to compare and validate password during login
 userSchema.methods.isCorrectPassword = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
 
-// when we query a user, we'll also get another field called `bookCount` with the number of saved books we have
-userSchema.virtual('bookCount').get(function () {
-  return this.savedBooks.length;
+// Virtual property that returns the number of saved bills
+userSchema.virtual('billCount').get(function () {
+  return this.savedBills.length;
 });
 
 const User = model<UserDocument>('User', userSchema);

@@ -8,7 +8,7 @@ import type { User } from '../models/User';
 
 const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
   // set initial form state
-  const [userFormData, setUserFormData] = useState<User>({ username: '', email: '', password: '', savedBooks: [] });
+  const [userFormData, setUserFormData] = useState<User>({ username: '', email: '', password: '', savedBills: [] });
   // set state for form validation
   const [validated, setValidated] = useState(false);
   // set state for alert
@@ -67,7 +67,7 @@ const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
       username: '',
       email: '',
       password: '',
-      savedBooks: [],
+      savedBills: [],
     });
   };
 
